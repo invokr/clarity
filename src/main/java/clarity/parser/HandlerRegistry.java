@@ -7,42 +7,42 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import clarity.match.Match;
+import clarity.parser.handler.ClaCreateStringTableHandler;
+import clarity.parser.handler.ClaUpdateStringTableHandler;
 import clarity.parser.handler.DemClassInfoHandler;
 import clarity.parser.handler.DemFileHeaderHandler;
-import clarity.parser.handler.DemStringTablesHandler;
 import clarity.parser.handler.DemSyncTickHandler;
+import clarity.parser.handler.ModifierBuffTableEntryHandler;
 import clarity.parser.handler.NetTickHandler;
-import clarity.parser.handler.SvcCreateStringTableHandler;
 import clarity.parser.handler.SvcGameEventHandler;
 import clarity.parser.handler.SvcGameEventListHandler;
 import clarity.parser.handler.SvcPacketEntitiesHandler;
 import clarity.parser.handler.SvcSendTableHandler;
 import clarity.parser.handler.SvcServerInfoHandler;
 import clarity.parser.handler.SvcTempEntitiesHandler;
-import clarity.parser.handler.SvcUpdateStringTableHandler;
 import clarity.parser.handler.UserMsgCreateLinearProjectileHandler;
 import clarity.parser.handler.UserMsgDestroyLinearProjectileHandler;
 import clarity.parser.handler.UserMsgDodgeTrackingProjectilesHandler;
 import clarity.parser.handler.UserMsgGamerulesStateChangedHandler;
 import clarity.parser.handler.UserMsgParticleManagerHandler;
+import clarity.parser.messages.CCLAMsg_CreateStringTable;
+import clarity.parser.messages.CCLAMsg_UpdateStringTable;
 
 import com.dota2.proto.Demo.CDemoClassInfo;
 import com.dota2.proto.Demo.CDemoFileHeader;
-import com.dota2.proto.Demo.CDemoStringTables;
 import com.dota2.proto.Demo.CDemoSyncTick;
+import com.dota2.proto.DotaModifiers.CDOTAModifierBuffTableEntry;
 import com.dota2.proto.DotaUsermessages.CDOTAUserMsg_CreateLinearProjectile;
 import com.dota2.proto.DotaUsermessages.CDOTAUserMsg_DestroyLinearProjectile;
 import com.dota2.proto.DotaUsermessages.CDOTAUserMsg_DodgeTrackingProjectiles;
 import com.dota2.proto.DotaUsermessages.CDOTAUserMsg_ParticleManager;
 import com.dota2.proto.DotaUsermessages.CDOTA_UM_GamerulesStateChanged;
 import com.dota2.proto.Netmessages.CNETMsg_Tick;
-import com.dota2.proto.Netmessages.CSVCMsg_CreateStringTable;
 import com.dota2.proto.Netmessages.CSVCMsg_GameEventList;
 import com.dota2.proto.Netmessages.CSVCMsg_PacketEntities;
 import com.dota2.proto.Netmessages.CSVCMsg_SendTable;
 import com.dota2.proto.Netmessages.CSVCMsg_ServerInfo;
 import com.dota2.proto.Netmessages.CSVCMsg_TempEntities;
-import com.dota2.proto.Netmessages.CSVCMsg_UpdateStringTable;
 import com.dota2.proto.Networkbasetypes.CSVCMsg_GameEvent;
 import com.google.protobuf.GeneratedMessage;
 
@@ -58,8 +58,7 @@ public class HandlerRegistry {
         H.put(CDemoFileHeader.class, new DemFileHeaderHandler());
         H.put(CSVCMsg_ServerInfo.class, new SvcServerInfoHandler());
         H.put(CDemoClassInfo.class, new DemClassInfoHandler());
-        H.put(CDemoStringTables.class, new DemStringTablesHandler());
-        H.put(CSVCMsg_CreateStringTable.class, new SvcCreateStringTableHandler());
+        H.put(CCLAMsg_CreateStringTable.class, new ClaCreateStringTableHandler());
         H.put(CSVCMsg_SendTable.class, new SvcSendTableHandler());
         H.put(CDemoSyncTick.class, new DemSyncTickHandler());
         H.put(CSVCMsg_GameEventList.class, new SvcGameEventListHandler());
@@ -67,7 +66,7 @@ public class HandlerRegistry {
         // for match data
         H.put(CNETMsg_Tick.class, new NetTickHandler());
         H.put(CSVCMsg_PacketEntities.class, new SvcPacketEntitiesHandler());
-        H.put(CSVCMsg_UpdateStringTable.class, new SvcUpdateStringTableHandler());
+        H.put(CCLAMsg_UpdateStringTable.class, new ClaUpdateStringTableHandler());
         H.put(CSVCMsg_GameEvent.class, new SvcGameEventHandler());
         H.put(CSVCMsg_TempEntities.class, new SvcTempEntitiesHandler());
 
@@ -77,6 +76,7 @@ public class HandlerRegistry {
         H.put(CDOTAUserMsg_DodgeTrackingProjectiles.class, new UserMsgDodgeTrackingProjectilesHandler());
         H.put(CDOTAUserMsg_ParticleManager.class, new UserMsgParticleManagerHandler());
 
+        H.put(CDOTAModifierBuffTableEntry.class, new ModifierBuffTableEntryHandler());
         
     }
 

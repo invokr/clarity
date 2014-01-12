@@ -2,19 +2,18 @@ package clarity.model;
 
 import clarity.decoder.Util;
 
-import com.dota2.proto.Netmessages.CSVCMsg_CreateStringTable;
 import com.google.protobuf.ByteString;
 
 public class StringTable {
 
-    private final CSVCMsg_CreateStringTable createMessage;
+    private final String name;
     private final String[] names;
     private final ByteString[] values;
 
-    public StringTable(CSVCMsg_CreateStringTable createMessage) {
-        this.createMessage = createMessage;
-        this.names = new String[createMessage.getMaxEntries()];
-        this.values = new ByteString[createMessage.getMaxEntries()];
+    public StringTable(String name, int maxEntries) {
+        this.name = name;
+        this.names = new String[maxEntries];
+        this.values = new ByteString[maxEntries];
     }
 
     public void set(int index, String name, ByteString value) {
@@ -43,24 +42,8 @@ public class StringTable {
         return null;
     }
 
-    public int getMaxEntries() {
-        return createMessage.getMaxEntries();
-    }
-
-    public boolean getUserDataFixedSize() {
-        return createMessage.getUserDataFixedSize();
-    }
-
-    public int getUserDataSize() {
-        return createMessage.getUserDataSize();
-    }
-
-    public int getUserDataSizeBits() {
-        return createMessage.getUserDataSizeBits();
-    }
-
     public String getName() {
-        return createMessage.getName();
+        return name;
     }
 
     public String toString() {

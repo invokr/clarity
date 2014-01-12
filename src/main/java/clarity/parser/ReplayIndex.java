@@ -9,6 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import clarity.model.PacketType;
+import clarity.parser.messages.CCLAMsg_UpdateStringTable;
 
 import com.dota2.proto.Demo.CDemoStop;
 import com.dota2.proto.Demo.CDemoStringTables;
@@ -109,7 +110,7 @@ public class ReplayIndex {
             );
     }
     
-    public Iterator<Peek> filteringIteratorForTicks(final int startTick, final int endTick, final PacketType packetType, final Class<? extends GeneratedMessage> clazz) {
+    public Iterator<Peek> filteringIteratorForTicks(final int startTick, final int endTick, final PacketType packetType, final Class<?> clazz) {
         return Iterators.filter(
             matchIteratorForTicks(startTick, endTick, packetType),
             new Predicate<Peek>() {
@@ -122,9 +123,9 @@ public class ReplayIndex {
     }
     
     public Iterator<Peek> skipToIterator(final int tick) {
-        final Peek p = Iterators.getLast(filteringIteratorForTicks(0, tick, PacketType.FULL, CDemoStringTables.class)); 
+        final Peek p = Iterators.getLast(filteringIteratorForTicks(0, tick, PacketType.FULL, CCLAMsg_UpdateStringTable.class)); 
         return Iterators.concat(
-            filteringIteratorForTicks(0, p.getTick() - 1, PacketType.FULL, CDemoStringTables.class),
+            filteringIteratorForTicks(0, p.getTick() - 1, PacketType.FULL, CCLAMsg_UpdateStringTable.class),
             matchIteratorForTicks(p.getTick(), p.getTick(), PacketType.FULL),
             matchIteratorForTicks(p.getTick() + 1, tick, PacketType.DELTA)
         );

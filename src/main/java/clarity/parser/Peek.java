@@ -5,8 +5,6 @@ import org.slf4j.LoggerFactory;
 
 import clarity.match.Match;
 
-import com.google.protobuf.GeneratedMessage;
-
 public class Peek {
 
     private static final Logger log = LoggerFactory.getLogger(Peek.class);
@@ -15,9 +13,9 @@ public class Peek {
     private int tick;
     private final int peekTick;
     private final boolean full;
-    private final GeneratedMessage message;
+    private final Object message;
 
-    public Peek(int id, int tick, int peekTick, boolean full, GeneratedMessage message) {
+    public Peek(int id, int tick, int peekTick, boolean full, Object message) {
         this.id = id;
         this.tick = tick;
         this.peekTick = peekTick;
@@ -41,7 +39,7 @@ public class Peek {
         return full;
     }
     
-    public GeneratedMessage getMessage() {
+    public Object getMessage() {
         return message;
     }
 
@@ -56,20 +54,7 @@ public class Peek {
     }
     
     public void trace() {
-        log.trace("id: {}, peekTick: {}, tick: {}, full: {}, mesageType: {}", id, peekTick, tick, full, message.getDescriptorForType().getName());
-    }
-
-    @Override
-    public String toString() {
-        StringBuilder builder = new StringBuilder();
-        builder.append("Peek [tick=");
-        builder.append(tick);
-        builder.append(", type=");
-        builder.append(message.getDescriptorForType().getName());
-        builder.append(", size=");
-        builder.append(message.getSerializedSize());
-        builder.append("]");
-        return builder.toString();
+        log.trace("id: {}, peekTick: {}, tick: {}, full: {}, messageType: {}", id, peekTick, tick, full, message.getClass().getSimpleName());
     }
 
 }
